@@ -1,0 +1,739 @@
+@import url('https://fonts.googleapis.com/css2?family=Krub:wght@400;600;700&family=Staatliches&display=swap');
+
+/* ===================================================
+   1. VARIABLES Y TEMAS
+   =================================================== */
+:root {
+    --blanco: #ffffff;
+    --oscuro: #0F172A;          /* Slate Oscuro Base */
+    --primario: #FACC15;        /* Amarillo Neón Brillante Base */
+    --secundario: #6B21A8;      /* Morado Barra de Navegación */
+    --cian: #06B6D4;            /* Cian Eléctrico */
+    --verde: #22C55E;           /* Verde Esmeralda Neón */
+    --magenta: #D946EF;         /* Violeta/Magenta Neón Eléctrico */
+    --azul-wishlist: #0284C7;    /* Azul Neón Eléctrico para Wishlist */
+    --gris: #94A3B8;
+    --grisOscuro: #1E293B;
+    --fuenteTitulos: 'Staatliches', cursive;
+    --fuenteTexto: 'Krub', sans-serif;
+
+    /* Palette Swapping Dinámico por Modalidad */
+    --theme-primary: #FACC15;
+    --theme-secondary: #06B6D4;
+    --theme-glow: rgba(250, 204, 21, 0.6);
+}
+
+/* Paletas de Color por Modalidad (Palette Swapping) */
+[data-modalidad-theme="Online"] {
+    --theme-primary: #06B6D4;    /* Cyber Cyan */
+    --theme-secondary: #FACC15;  
+    --theme-glow: rgba(6, 182, 212, 0.75);
+}
+
+[data-modalidad-theme="Presencial"] {
+    --theme-primary: #22C55E;    /* Emerald Green */
+    --theme-secondary: #06B6D4;  
+    --theme-glow: rgba(34, 197, 94, 0.75);
+}
+
+[data-modalidad-theme="Grabado"] {
+    --theme-primary: #D946EF;    /* Violeta/Magenta Neón Eléctrico */
+    --theme-secondary: #FACC15;  
+    --theme-glow: rgba(255, 0, 127, 0.75);
+}
+
+[data-modalidad-theme="Todos"] {
+    --theme-primary: #FACC15;    /* Amarillo Neón Brillante */
+    --theme-secondary: #06B6D4;
+    --theme-glow: rgba(250, 204, 21, 0.75);
+}
+
+/* ===================================================
+   2. REGLAS GENERALES Y RESET
+   =================================================== */
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    background-image: linear-gradient(to top, #1E1B4B 0%, var(--oscuro) 100%);
+    color: var(--blanco);
+    font-family: var(--fuenteTexto);
+    font-size: 1.6rem;
+    line-height: 1.5;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a { text-decoration: none; }
+
+.contenedor {
+    max-width: 120rem;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.sombra-neon {
+    box-shadow: 0px 5px 25px 0px rgba(107, 33, 168, 0.3);
+    background-color: var(--grisOscuro);
+    padding: 3rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(6, 182, 212, 0.2);
+    margin-bottom: 3rem;
+}
+
+/* ===================================================
+   3. TIPOGRAFÍA Y ENCABEZADOS
+   =================================================== */
+h1, h2, h3 {
+    font-family: var(--fuenteTitulos);
+    text-align: center;
+    margin: 2rem 0;
+}
+
+h1 { font-size: 4rem; color: var(--blanco); }
+
+h2 { 
+    font-size: 3.8rem; 
+    color: var(--theme-primary); 
+    text-shadow: 0 0 14px var(--theme-glow); 
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+h3 { 
+    font-size: 3.2rem; 
+    color: var(--cian); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+/* ===================================================
+   4. HEADER Y LOGO
+   =================================================== */
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem 0 1.5rem 0;
+}
+
+.logo-link {
+    display: flex;
+    flex-direction: row;        /* Mantiene el icono a la izquierda y el texto a la derecha */
+    align-items: center;
+    gap: 1.5rem;
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .logo-link { flex-direction: row; }
+}
+
+.header__logo-img {
+    width: 6.5rem;
+    height: 6.5rem;
+    object-fit: contain;
+    border-radius: 50%;
+    filter: drop-shadow(0 0 6px var(--cian)) 
+            drop-shadow(0 0 12px var(--secundario)) 
+            drop-shadow(0 0 18px rgba(147, 51, 234, 0.6));
+    transition: transform 0.3s ease, filter 0.3s ease;
+    animation: neonPulsePurpleBlue 3s infinite alternate;
+}
+
+.logo-link:hover .header__logo-img {
+    transform: scale(1.1) rotate(-5deg);
+    filter: drop-shadow(0 0 10px var(--secundario)) 
+            drop-shadow(0 0 20px #9333EA) 
+            drop-shadow(0 0 30px var(--cian));
+}
+
+/* Contenedor vertical de los títulos */
+.logo-textos {
+    display: flex;
+    flex-direction: column;    /* Apila CUETLACHTLI arriba de EduCursos */
+    justify-content: center;
+    align-items: flex-start;
+    line-height: 1;
+}
+
+/* Subtítulo superior: CUETLACHTLI */
+.logo-subtitulo {
+    font-family: var(--fuenteTitulos);   /* Usa la fuente gruesa de los títulos */
+    font-size: 2.8rem;                  /* Mayor tamaño */
+    font-weight: 700;
+    color: #D946EF;                     /* Magenta Neón vibrante */
+    letter-spacing: 3px;                /* Espaciado de letras */
+    text-transform: uppercase;
+    /* Resplandor neón potente */
+    text-shadow: 0 0 8px #D946EF, 0 0 18px rgba(217, 70, 239, 0.8);
+    margin-bottom: 0.2rem;
+}
+
+/* Título principal: EduCursos */
+.logo {
+    color: var(--blanco);
+    margin: 0;
+    line-height: 0.9;
+    font-size: 4rem;
+    font-family: var(--fuenteTitulos);
+}
+
+.logo span {
+    color: var(--theme-primary);
+    text-shadow: 0 0 10px var(--theme-glow), 0 0 20px var(--theme-glow);
+    transition: all 0.4s ease;
+}
+
+@keyframes neonPulsePurpleBlue {
+    0% { filter: drop-shadow(0 0 5px var(--secundario)) drop-shadow(0 0 15px var(--cian)); }
+    50% { filter: drop-shadow(0 0 8px #9333EA) drop-shadow(0 0 16px var(--cian)); }
+    100% { filter: drop-shadow(0 0 6px var(--cian)) drop-shadow(0 0 20px var(--secundario)); }
+}
+
+/* ===================================================
+   5. NAVEGACIÓN Y BOTÓN WISHLIST MENÚ
+   =================================================== */
+.nav-bg {
+    background-color: var(--secundario);
+    border-bottom: 2px solid var(--theme-primary);
+    margin-bottom: 3rem;
+    transition: border-color 0.4s ease;
+}
+
+.navegacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1rem 0;
+}
+
+.navegacion__enlace {
+    color: var(--blanco) !important;
+    font-size: 2.4rem;
+    font-family: var(--fuenteTitulos);
+    padding: 0.8rem 1.6rem;
+    border-radius: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: transform 0.3s ease, 
+                color 0.4s ease, 
+                text-shadow 0.4s ease, 
+                background-color 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+
+.navegacion__enlace--activo,
+a.navegacion__enlace--activo {
+    color: var(--theme-primary) !important;
+    text-shadow: 0 0 10px var(--theme-primary), 0 0 20px var(--theme-glow) !important;
+    background-color: rgba(15, 23, 42, 0.5);
+    border-bottom: 2px solid var(--theme-primary);
+}
+
+.navegacion__enlace:hover {
+    color: var(--theme-primary) !important;
+    transform: translateY(-4px);
+    text-shadow: 0 0 10px var(--theme-primary), 0 0 20px var(--theme-glow);
+    background-color: rgba(15, 23, 42, 0.4);
+    box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+}
+
+/* Botón Wishlist en Menú */
+.btn-wishlist-nav {
+    background: transparent;
+    border: 1px solid var(--theme-primary);
+    color: var(--theme-primary);
+    font-family: var(--fuenteTitulos);
+    font-size: 2rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.btn-wishlist-nav:hover {
+    background-color: var(--theme-primary);
+    color: var(--oscuro);
+    box-shadow: 0 0 15px var(--theme-primary);
+}
+
+/* ===================================================
+   6. GRID Y TARJETAS DE PRODUCTO
+   =================================================== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2.5rem;
+}
+
+@media (min-width: 768px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 992px) {
+    .grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+.producto {
+    background-color: var(--oscuro);
+    border-radius: 1rem;
+    padding: 1.8rem;
+    border: 1px solid rgba(107, 33, 168, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 18px var(--theme-primary);
+}
+
+.producto__imagen {
+    width: 100%;
+    height: 22rem;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* CORRECCIÓN: Colores exactos sin alterar tonos internos de la imagen */
+.img-neon-Online {
+    border: 2px solid var(--cian);
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);
+}
+
+.img-neon-Presencial {
+    border: 2px solid var(--verde);
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
+}
+
+.img-neon-Grabado {
+    border: 2px solid var(--magenta);
+    box-shadow: 0 0 12px rgba(255, 0, 127, 0.5);
+}
+
+.producto__informacion {
+    text-align: center;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.producto__nombre {
+    font-size: 2.2rem;
+    font-family: var(--fuenteTitulos);
+    color: var(--blanco);
+    margin: 1rem 0 0.5rem 0;
+    text-transform: uppercase;
+}
+
+.producto__meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    color: var(--gris);
+}
+
+/* Regla general: solo define tamaño, fuente y márgenes, PERO NO EL COLOR */
+.producto__precio {
+    font-size: 2rem;
+    font-family: var(--fuenteTitulos);
+    /*
+    color: var(--theme-primary);   /* Todas las tarjetas usaban el mismo color 
+    transition: color 0.4s ease;
+    */
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+}
+
+/* Reglas específicas por modalidad: aplican el color de forma limpia por cascada */
+.precio-neon-Online {
+    color: var(--cian);
+    text-shadow: 0 0 8px rgba(6, 182, 212, 0.4);
+}
+
+.precio-neon-Presencial {
+    color: var(--verde);
+    text-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+}
+
+.precio-neon-Grabado {
+    color: var(--magenta);
+    text-shadow: 0 0 8px rgba(217, 70, 239, 0.4);
+}
+
+/* ===================================================
+   7. BADGES DE ETIQUETA Y MODALIDADES
+   =================================================== */
+.badge-etiqueta-card {
+    background-color: transparent;
+    /*border: 1px solid var(--cian);*/
+    color: var(--blanco);
+    padding: 0.4rem 1.2rem;
+    border-radius: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.4rem;
+    font-family: var(--fuenteTexto);
+    font-weight: 700;
+}
+
+/*
+.badge-etiqueta-card i { color: var(--primario); }
+*/
+
+/* Modalidad Online: Borde, icono y resplandor Cian */
+.badge-etiqueta-Online {
+    border: 1px solid var(--cian);
+    background-color: rgba(6, 182, 212, 0.1);
+}
+
+.badge-etiqueta-Online i {
+    color: var(--cian);
+}
+
+/* Modalidad Presencial: Borde, icono y resplandor Verde */
+.badge-etiqueta-Presencial {
+    border: 1px solid var(--verde);
+    background-color: rgba(34, 197, 94, 0.15);
+}
+
+.badge-etiqueta-Presencial i {
+    color: var(--verde);
+}
+
+/* Modalidad Grabado: Borde, icono y resplandor Magenta */
+.badge-etiqueta-Grabado {
+    border: 1px solid var(--magenta);
+    background-color: rgba(217, 70, 239, 0.15);
+}
+
+.badge-etiqueta-Grabado i {
+    color: var(--magenta);
+}
+
+.badge-modalidad-card {
+    background-color: transparent;
+    border-radius: 0.5rem;
+    padding: 0.4rem 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.4rem;
+    font-family: var(--fuenteTexto);
+    font-weight: 700;
+    color: var(--blanco);
+}
+
+.badge-modalidad-card.modalidad-online { 
+    border: 1px solid var(--cian); 
+    background-color: rgba(6, 182, 212, 0.1);
+}
+
+.badge-modalidad-card.modalidad-online i { color: var(--cian); }
+
+.badge-modalidad-card.modalidad-presencial {
+    border: 1px solid var(--verde);
+    background-color: rgba(34, 197, 94, 0.15);
+}
+
+.badge-modalidad-card.modalidad-presencial i { color: var(--verde); }
+
+.badge-modalidad-card.modalidad-grabado {
+    border: 1px solid var(--magenta);
+    background-color: rgba(255, 0, 127, 0.15);
+}
+
+.badge-modalidad-card.modalidad-grabado i { color: var(--magenta); }
+
+/* ===================================================
+   8. DETALLE DE PRODUCTO
+   =================================================== */
+@media (min-width: 768px) {
+    .producto-detalle {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 3rem;
+        align-items: start;
+    }
+}
+
+.producto-detalle__imagen {
+    width: 100%;
+    border-radius: 1rem;
+    border: 3px solid var(--theme-primary) !important;
+    box-shadow: 0 0 22px var(--theme-glow) !important;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.producto-detalle__descripcion {
+    font-size: 1.8rem;
+    color: var(--gris);
+}
+
+/* ===================================================
+   9. BOTONES Y FORMULARIOS
+   =================================================== */
+.boton {
+    background-color: var(--cian);
+    color: var(--oscuro);
+    font-family: var(--fuenteTitulos);
+    padding: 1.2rem 3rem;
+    font-size: 2.2rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: inline-block;
+    width: 100%;
+    margin-top: auto;
+    font-weight: bold;
+}
+
+.boton:hover {
+    background-color: var(--primario);
+    box-shadow: 0 0 15px var(--primario);
+    color: var(--oscuro);
+}
+
+.boton--secundario {
+    background-color: transparent;
+    color: var(--primario);
+    border: 2px solid var(--primario);
+}
+
+.boton--secundario:hover {
+    background-color: var(--primario);
+    color: var(--oscuro);
+}
+
+/* Formularios */
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.formulario__campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.formulario__label {
+    font-size: 1.8rem;
+    color: var(--cian);
+    font-family: var(--fuenteTitulos);
+    letter-spacing: 0.05rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.formulario__input,
+.formulario__textarea,
+.formulario__select {
+    border: 1px solid var(--secundario);
+    background-color: var(--oscuro);
+    color: var(--blanco);
+    padding: 1.2rem;
+    font-size: 1.8rem;
+    border-radius: 0.5rem;
+    font-family: var(--fuenteTexto);
+}
+
+.formulario__input:focus,
+.formulario__textarea:focus,
+.formulario__select:focus {
+    outline: none;
+    border-color: var(--cian);
+    box-shadow: 0 0 10px var(--cian);
+}
+
+/* ===================================================
+   10. TABLAS Y ACORDEÓN
+   =================================================== */
+.tabla-contenedor { overflow-x: auto; }
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.6rem;
+    text-align: left;
+}
+
+.tabla thead tr {
+    background-color: var(--secundario);
+    color: var(--blanco);
+    border-bottom: 2px solid var(--cian);
+}
+
+.tabla th {
+    font-family: var(--fuenteTitulos);
+    font-size: 2.2rem;
+    padding: 1.2rem;
+}
+
+.tabla td {
+    padding: 1.2rem;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    color: var(--blanco);
+}
+
+.tabla tbody tr:hover { background-color: rgba(6, 182, 212, 0.1); }
+
+/* Acordeón */
+.acordeon {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.acordeon__item {
+    border: 1px solid var(--secundario);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background-color: var(--oscuro);
+}
+
+.acordeon__titulo {
+    background-color: var(--grisOscuro);
+    color: var(--cian);
+    padding: 1.5rem;
+    font-family: var(--fuenteTitulos);
+    font-size: 2rem;
+    cursor: pointer;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.acordeon__contenido {
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    color: var(--gris);
+    display: none;
+}
+
+.acordeon__contenido--activo { display: block; }
+
+/* ===================================================
+   11. MODAL WISHLIST Y ALERTAS
+   =================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.activo {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-wishlist {
+    background-color: #0F172A;
+    border: 2px solid var(--azul-wishlist);
+    box-shadow: 0 0 25px rgba(2, 132, 199, 0.6);
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 60rem;
+    padding: 2.5rem;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-wishlist h3 {
+    color: var(--azul-wishlist) !important;
+}
+
+.modal-wishlist h3 i {
+    color: var(--azul-wishlist) !important;
+}
+
+.modal-wishlist-header {
+    border-bottom: 2px solid var(--azul-wishlist) !important;
+}
+
+.wishlist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    gap: 1.5rem;
+}
+
+/* Alertas */
+.alerta-flotante {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 3000;
+    background-color: var(--grisOscuro);
+    border-left: 5px solid var(--cian);
+    color: var(--blanco);
+    padding: 1.5rem 2.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+    font-size: 1.8rem;
+}
+
+/* ===================================================
+   12. FOOTER
+   =================================================== */
+.footer {
+    background-color: var(--oscuro);
+    padding: 2.5rem 0;
+    text-align: center;
+    border-top: 1px solid var(--secundario);
+    margin-top: auto;
+}
+
+.footer__texto {
+    color: var(--gris);
+    font-size: 1.6rem;
+    margin: 0;
+}

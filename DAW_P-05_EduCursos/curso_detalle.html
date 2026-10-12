@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es" data-modalidad-theme="Todos">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCursos - Detalle del Curso</title>
+    <link rel="icon" type="image/x-icon" href="img/logo.ico" onerror="this.href='data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'45\' fill=\'%230F172A\' stroke=\'%23FACC15\' stroke-width=\'6\'/><path d=\'M30 65 L50 30 L70 65 Z\' fill=\'%2306B6D4\'/></svg>'">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- <link rel="stylesheet" href="css/estilos.css">
+
+    <!-- Script para cargar el archivo CSS con la fecha y hora actual en tiempo real -->
+    <script>
+        (function() {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'css/estilos.css?v=' + new Date().getTime();
+            document.head.appendChild(link);
+        })();
+    </script>
+</head>
+<body>    
+    <!-- 
+    <header class="header">
+        <a href="index.html" class="logo-link">
+            <img src="img/logo.jpg" alt="Logo EduCursos" class="header__logo-img" onerror="this.style.display='none'">
+            <h1 class="logo">Edu<span>Cursos</span></h1>
+        </a>
+    </header>
+    -->
+    <header class="header">
+        <a href="index.html" class="logo-link">
+            <img src="img/logo.jpg" alt="Logo EduCursos" class="header__logo-img">
+            
+            <!-- Contenedor vertical de los títulos -->
+            <div class="logo-textos">
+                <span class="logo-subtitulo">CUETLACHTLI</span>
+                <h1 class="logo">Edu<span>Cursos</span></h1>
+            </div>
+        </a>
+    </header>
+
+    <div class="nav-bg">
+        <nav class="navegacion contenedor">
+            <a class="navegacion__enlace" href="index.html"><i class="bi bi-grid-fill"></i> Catálogo</a>
+            <a class="navegacion__enlace" href="inscripciones.html"><i class="bi bi-file-earmark-text-fill"></i> Inscripciones</a>
+            <a class="navegacion__enlace" href="mis_cursos.html"><i class="bi bi-journal-check"></i> Mis Cursos</a>
+            <a class="navegacion__enlace" href="contacto.html"><i class="bi bi-envelope-fill"></i> Contacto</a>
+            <button class="btn-wishlist-nav" onclick="abrirModalWishlist()">
+                <i class="bi bi-heart-fill"></i> Wishlist (<span id="wishlist-counter">0</span>)
+            </button>
+        </nav>
+    </div>
+
+    <main class="contenedor">
+        <h2><i class="bi bi-info-circle-fill"></i> Detalle del Curso</h2>
+
+        <div class="sombra-neon">
+            <div class="producto-detalle" id="contenedor-detalle"></div>
+        </div>
+    </main>
+
+    <!-- Modal Wishlist en Azul Marino Metálico -->
+    <div class="modal-overlay" id="modal-wishlist">
+        <div class="modal-wishlist">
+            <div class="modal-wishlist-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--azul-wishlist); padding-bottom: 1rem; margin-bottom: 2rem;">
+                <h3 style="margin: 0; color: var(--azul-wishlist);"><i class="bi bi-heart-fill"></i> Mi Wishlist</h3>
+                <button class="boton" style="width: auto; padding: 0.5rem 1.5rem; background-color: transparent; color: var(--blanco); border: 1px solid var(--gris);" onclick="cerrarModalWishlist()">✕</button>
+            </div>
+            <div id="wishlist-lista"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p class="footer__texto">© 2026 EduCursos - Facultad de Ciencias de la Computación BUAP</p>
+    </footer>
+
+    <script src="js/utilidades.js"></script>
+    <script src="js/catalogo.js"></script>
+    <script src="js/wishlist.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id')) || 1;
+            const curso = CATALOGO_CURSOS.find(c => c.id === id) || CATALOGO_CURSOS[0];
+
+            // Aplicar Palette Swapping inicial basado en la modalidad del curso seleccionado
+            aplicarPaletteSwapping(curso.modalidad);
+
+            const contenedor = document.getElementById('contenedor-detalle');
+            // Punto 1: Estructura de 2 columnas paralelas (Imagen a la Izquierda, Info a la Derecha)
+            contenedor.innerHTML = `
+                <div>
+                    <img src="${curso.imagen}" id="img-detalle" class="producto-detalle__imagen img-neon-${curso.modalidad}" alt="${curso.titulo}" onerror="this.src='https://via.placeholder.com/400x250/111827/00f3ff?text=${encodeURIComponent(curso.titulo)}'">
+                    
+	                <!-- Requisitos y Objetivos requeridos por la guía -->
+	                <div style="margin: 1.5rem 0; font-size: 1.5rem; color: var(--gris);">
+	                    <p><strong style="color: var(--blanco);"><i class="bi bi-bullseye"></i> Objetivo:</strong> Dominar las mejores prácticas de ${curso.etiqueta} aplicadas a proyectos reales de la industria.</p>
+	                    <p><strong style="color: var(--blanco);"><i class="bi bi-check-circle-fill"></i> Requisitos:</strong> Navegador web actualizado y conocimientos básicos de computación.</p>
+	                </div>
+                    
+                </div>
+					
+                <div>
+                    <h2 style="text-align: left; margin-top: 0; justify-content: start;">${curso.titulo}</h2>
+                    <p class="producto-detalle__descripcion">${curso.descripcion}</p>
+                    <p class="producto__precio precio-neon-${curso.modalidad}">${curso.nivel} - ${curso.duracion}</p>
+                    
+                    <!-- Cambiar Modalidad y Palette Swapping en Detalle -->
+                    <div class="formulario__campo" style="margin-bottom: 2rem;">
+                        <label class="formulario__label"><i class="bi bi-sliders"></i> Selecciona o Cambia de Modalidad:</label>
+                        <select id="select-modalidad-detalle" class="formulario__select" onchange="cambiarModalidadCurso(this.value)">
+                            <option value="Online" ${curso.modalidad === 'Online' ? 'selected' : ''}>🌐 Online (Cyan)</option>
+                            <option value="Presencial" ${curso.modalidad === 'Presencial' ? 'selected' : ''}>🏢 Presencial (Green)</option>
+                            <option value="Grabado" ${curso.modalidad === 'Grabado' ? 'selected' : ''}>📹 Grabado (Magenta)</option>
+                        </select>
+                    </div>
+
+                    <h3 style="justify-content: start;"><i class="bi bi-journal-bookmark-fill"></i> Programa del Curso</h3>
+                    <div class="acordeon">
+                        <div class="acordeon__item">
+                            <h4 class="acordeon__titulo" onclick="toggleAcordeon(this)">Módulo 1: Fundamentos <span>+</span></h4>
+                            <div class="acordeon__contenido">Introducción al entorno de desarrollo, sintaxis clave y estructuración.</div>
+                        </div>
+                        <div class="acordeon__item">
+                            <h4 class="acordeon__titulo" onclick="toggleAcordeon(this)">Módulo 2: Proyecto Práctico <span>+</span></h4>
+                            <div class="acordeon__contenido">Desarrollo guiado de componentes avanzados e integración funcional.</div>
+                        </div>
+                    </div>
+
+                    <button class="boton boton--secundario" style="margin-top: 2rem;" onclick='agregarAWishlist(${JSON.stringify(curso)})'>
+                        ♥ Agregar a Wishlist
+                    </button>
+                </div>
+            `;
+        });
+
+        // Cambia dinámicamente la paleta neón global y el borde de la imagen en tiempo real
+        function cambiarModalidadCurso(nuevaModalidad) {
+            aplicarPaletteSwapping(nuevaModalidad);
+            mostrarAlerta(`Modalidad adaptada a: ${nuevaModalidad}`);
+        }
+
+        function toggleAcordeon(elemento) {
+            const contenido = elemento.nextElementSibling;
+            contenido.classList.toggle('acordeon__contenido--activo');
+        }
+    </script>
+</body>
+</html>
